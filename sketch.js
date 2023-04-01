@@ -36,7 +36,10 @@ var starSpeed = 5;
 var blue1;
 var track = 1;
 var song = 1;
-
+var start = 0;
+function preload() {
+  myFont = loadFont('Inconsolata-Regular.ttf');
+}
 function setup() {
     blue1=color('rgba(255,150,150, 20)');
     fill(0);
@@ -66,14 +69,25 @@ function setup() {
 	add = TWO_PI / number;
     makeStars();
     
+    //startingText =
+    //
 }
 
 
 function draw() {
     
     
+    
 	drawEasyCam();
 	normalMaterial();
+    if(!start){
+        textFont(myFont);
+        textAlign(CENTER);
+        textSize(60);
+        text("Press Any Key to Start", 0, -15, 0);
+        
+        return;
+      }
 
 	if (sound.isLoaded()) {
 		if (sound.isPlaying() == false && sound.isPaused() == false) { // Will return true if a sound has just been loaded in
@@ -180,8 +194,12 @@ for (var i = 0; i < number; i++) {
 
 
 // Custom functions
+function mouseClicked(){
+  start = true;
+}
 
 function keyPressed() {
+    start = true;
 	if(keyCode == RIGHT_ARROW){next()} // Next track (loops back to start if at end)
 	if(keyCode == LEFT_ARROW){prev()} // Previous track (loops back to end if at start)
 	if(keyCode == DOWN_ARROW){noLoop(); sound.pause()} // noLoop() is used to make sure the wave freezes
